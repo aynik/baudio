@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+		<title>JAM21</title>
+		<link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Questrial'>
+		<link rel='stylesheet' type='text/css' href='styles.css'>
+		<script>
+			document.addEventListener('keydown', function (e) {
+				switch (e.key) {
+					case 'Escape': return toggleMenu()
+					case 'Enter': return toggleSearch()
+					default:
+						if (parseInt(e.key, 10) === +e.key) {
+							return selectStream(document.querySelectorAll('.streams a')[+e.key])
+						}
+				}
+				console.log(e.key)
+			}) 
+			function toggleMenu () {
+				document.querySelector('.container').classList.toggle('show-nav')
+			}
+			function toggleSearch () {
+				document.querySelector('.content').classList.toggle('show-search')
+        var input = document.querySelector('.show-search header section input')
+        if (input) input.focus()
+			}		
+			function selectStream (stream) {
+				var last = document.querySelector('.streams a.active')
+				stream.classList.toggle('active')	
+				if (last && last.classList.contains('active')) last.classList.toggle('active')
+			}	
+		</script>
+	</head>
+		<body>
+		<section class='root'>
+			<section class='container'>
+				<section class='content'>
+					<header>
+						<button onclick="toggleMenu()" class="toggle-nav">
+							<i class='icon-menu'></i>
+						</button>
+						<button onclick="toggleSearch()" class="search">
+							<i class='icon-filter'></i>
+						</button>
+						<img src='logo.svg'>
+						<section>
+              <div>
+                <i class='icon-search'></i>
+                <input type='text' />
+                <button class='rate'>Users</button>
+                <button class='price'>Price</button>
+              </div>
+						</section>
+					</header>
+					<section class='streams'>
+						<ul>
+							<script>
+								var words = ['Radio', 'FM', 'Signal', '84.4', 'News', 'Fantastic']
+								var random = function () { return Math.round(Math.random()) }
+								for (var p, o, w, n = 0, d, l = 100; n < l; n++) {
+									o = words.sort(random).slice(parseInt(Math.random()*3, 10))
+									o = o.slice(0, 1 + parseInt(Math.random()*4, 10))
+									p = 1+parseInt(Math.random()*99, 10)
+									d = `hsla(${0+(20-p/25)}, ${p}%, 40%, 1)`
+									console.log(d)
+									document.write(`<li>
+										<a href='#stream-${p}' 
+											onclick='selectStream(this)' 
+											style='border-left-color: ${d}'>
+												${o.join(' ')}</a>
+										<em>
+											${Math.round(Math.random()*1000)}&nbsp;
+											<i class='icon-headphones'></i>
+										</em>
+										<span style='color: ${d}'>
+											${p} bph
+										</span>
+									</li>`)
+								}
+							</script>
+						</ul>
+					</section>
+					<footer>
+						<section>
+							<button class='play'><i></i></button>
+						</section>
+					</footer>
+				</section>
+				<nav>
+				</nav>
+			</section>
+		</section>
+	</body>
+</html>
