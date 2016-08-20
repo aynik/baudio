@@ -12,7 +12,8 @@ const browserHistory = useRouterHistory(createBrowserHistory)({
 })
 
 const initialState = window.___INITIAL_STATE__
-const store = createStore(initialState, browserHistory)
+const store = createStore(initialState, browserHistory, 
+  window.devToolsExtension && window.devToolsExtension())
 const history = syncHistoryWithStore(browserHistory, store, {
   selectLocationState: (state) => state.router
 })
