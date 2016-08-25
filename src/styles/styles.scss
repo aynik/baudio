@@ -192,12 +192,12 @@ ul {
     font-style: normal;
   }
 
-  .container.show-menu .toggle-menu {
+  .container.show-menu button.menu {
     right: 100vw;
     position: absolute;
   }
 
-  .content header .toggle-filter {
+  .content header button.filter {
     float: left;
     margin-left: 0.8em;
   }
@@ -268,12 +268,18 @@ ul {
     font-size: 0.8em;
     border-left: 1px solid #333;
     text-align: center;
-    padding-left: 1em;
   }
 
-  .content header section .price {
+  .content header section button.price {
     margin-right: 1em;
-    color: #666;
+  }
+
+  .content header section button.sort-desc {
+    color: #33aa33
+  }
+
+  .content header section button.sort-asc {
+    color: #aa3333
   }
 
   .content header section i {
@@ -322,8 +328,9 @@ ul {
 
   .streams ul li a:hover,
   .streams ul li a.active {
-      text-indent: 0.80em; 
-      border-left: 0.4em solid rgba(255,255,255,0.1);
+    text-indent: 0.85em;
+    border-left: 0.4em solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
   }
 
   .streams ul li a.active {

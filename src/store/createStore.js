@@ -15,15 +15,14 @@ export default (initialState = {}, history) => {
     }
   }
 
-  const store = createStore(
+  const store = Object.assign(createStore(
     makeRootReducer(),
     initialState,
     compose(
       applyMiddleware(...middleware),
       ...enhancers
     )
-  )
-  store.asyncReducers = {}
+  ), { asyncReducers: {} })
 
   return store
 }

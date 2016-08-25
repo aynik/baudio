@@ -1,36 +1,44 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
+import sortBy from 'sort-by'
 
 import classes from '../styles/styles.scss'
 
-export const StreamList = (props) => (
+const calcColour = (bph) => `hsla(${bph / 10}, ${bph * 4}%, 40%, 1)`
+
+const reverseSort = (order) => order ? order > 0 ? -1 : 1 : 0
+const sortField = (order, field) => order ? (order > 0 ? '' : '-') + field : false
+
+export const StreamList = ({ streams, filter, sortListeners = 0, sortBph = 0 }) => (
   <section className={classes.streams}>
     <ul>
-      { (() => {
-        var words = ['Radio', 'FM', 'Signal', '84.4', 'News', 'Fantastic']
-        var random = function () { return Math.round(Math.random()) }
-        var elements = []
-        for (var p, o, n = 0, d, l = 100; n < l; n++) {
-          o = words.sort(random).slice(parseInt(Math.random() * 3, 10))
-          o = o.slice(0, 1 + parseInt(Math.random() * 4, 10))
-          p = 1 + parseInt(Math.random() * 99, 10)
-          d = `hsla(${0 + (20 - p / 25)}, ${p}%, 40%, 1)`
-          elements.push(<li key={n}>
-            <a style={{borderLeftColor: d}}>
-              {o.join(' ')}
-            </a>
-            <em>
-              {Math.round(Math.random() * 1000)}&nbsp;
-              <i className={classes['icon-headphones']} />
-            </em>
-            <span style={{color: d}}>
-              {p} bph
-            </span>
-          </li>)
-        }
-        return elements
-      })() }
+    {streams.filter(
+      item => filter ? item.Name.indexOf(filter) > -1 : true
+    ).sort(sortBy(
+      sortField(reverseSort(sortListeners), 'Listeners') ||
+      sortField(sortBph, 'Bph')
+    )).map(({ Name, Listeners, Bph }, n) => (
+       <li key={n}>
+          <a style={{borderLeftColor: calcColour(Bph)}}>
+            {Name}
+          </a>
+          <em>
+            {Listeners}&nbsp;
+            <i className={classes['icon-headphones']} />
+          </em>
+          <span style={{color: calcColour(Bph)}}>
+            {Bph} bph
+          </span>
+        </li>
+    ))}
     </ul>
   </section>
 )
+
+StreamList.propTypes = {
+  streams: PropTypes.array,
+  filter: PropTypes.string,
+  sortListeners: PropTypes.number,
+  sortBph: PropTypes.number
+}
 
 export default StreamList

@@ -35,7 +35,8 @@ webpackConfig.entry = {
     'react-redux',
     'react-router',
     'react-router-redux',
-    'redux'
+    'redux',
+    'axios'
   ]
 }
 

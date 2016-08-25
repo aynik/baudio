@@ -11,6 +11,7 @@ let PORT = process.env.PORT || 8080
 let devServer = new WebpackDevServer(webpack(config), {
   hot: true,
   contentBase: path.resolve('./build'),
+  historyApiFallback: true,
   proxy: {
     '/api/v1/*': {
       host: API_HOST,

@@ -1,17 +1,15 @@
 import React from 'react'
 import Toggler from '../containers/Toggler'
-import MenuButton from './MenuButton'
-import FilterButton from './FilterButton'
+import Filter from '../containers/Filter'
+import IconButton from './IconButton'
 import Logo from './Logo'
-import Filter from './Filter'
 
-const ToggleMenuButton = Toggler('menu')(MenuButton)
-const ToggleFilterButton = Toggler('filter')(FilterButton)
+const TogglerIconButton = Toggler(IconButton)
 
 export const Header = (props) => (
   <header>
-    <ToggleMenuButton />
-    <ToggleFilterButton />
+    <TogglerIconButton value='menu' />
+    <TogglerIconButton value='filter' />
     <Logo />
     <Filter />
   </header>

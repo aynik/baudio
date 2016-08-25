@@ -1,11 +1,14 @@
-import Main from '../containers/Main'
 import Streams from './Streams'
+import Main from '../containers/Main'
 
 export const createRoutes = (store) => ({
   path: '/',
   component: Main,
-  indexRoute: Streams,
+  indexRoute: {
+    onEnter: (nextState, replace) => replace('streams')
+  },
   childRoutes: [
+    Streams(store)
   ]
 })
 

@@ -1,17 +1,17 @@
 import { connect } from 'react-redux'
-import { toggle } from '../store/actions'
+import { sort } from '../store/actions'
 
 const mapDispatchToProps = (dispatch, { value }) => {
   return {
     onClick: () => {
-      dispatch(toggle(value))
+      dispatch(sort(value))
     }
   }
 }
 
-export const Toggler = connect(
+export const Sorter = connect(
   null,
   mapDispatchToProps
 )
 
-export default Toggler
+export default Sorter
