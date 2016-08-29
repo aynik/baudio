@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import classNames from 'classnames'
 import Sorter from '../containers/Sorter'
 import Button from './Button'
+import IconButton from './IconButton'
 
 import classes from '../styles/styles.scss'
 
@@ -12,14 +13,12 @@ const sortClass = (order) => classNames({
   [classes['sort-asc']]: order < 0
 })
 
-export const FilterControls = ({ sortListeners, sortBph, onChange }) => (
+export const FilterControls = ({ sortBph, filter, onChange, onClick }) => (
   <section>
     <div>
       <i className={classes['icon-search']} />
-      <input type='text' onChange={onChange} />
-      <SorterButton value='listeners' className={sortClass(sortListeners)}>
-        Users
-      </SorterButton>
+      <input type='text' onChange={onChange} value={filter} />
+      { filter ? <IconButton value='cancel' onClick={onClick} /> : '' }
       <SorterButton value='bph'
         className={`${classes.price} ${sortClass(sortBph)}`}>
           Price
@@ -29,8 +28,9 @@ export const FilterControls = ({ sortListeners, sortBph, onChange }) => (
 )
 
 FilterControls.propTypes = {
-  sortListeners: PropTypes.number,
   sortBph: PropTypes.number,
+  filter: PropTypes.string,
+  onClick: PropTypes.func,
   onChange: PropTypes.func
 }
 

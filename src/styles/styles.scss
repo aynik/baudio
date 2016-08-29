@@ -13,7 +13,7 @@
 
 [class^="icon-"]:before, [class*=" icon-"]:before,
 [class^="styles__icon-"]:before, [class*=" styles__icon-"]:before {
-	font-style: normal;
+  font-style: normal;
 }
 
 .icon-filter:before {
@@ -25,6 +25,7 @@
 .icon-menu:before {
   content: "\e902";
 }
+.icon-cancel:before,
 .show-menu .icon-menu:before {
   content: "\ea0f";
 }
@@ -58,24 +59,24 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 }
 
 * {
-	font-family: "Questrial", sans-serif;
+  font-family: "Questrial", sans-serif;
   letter-spacing: 0.02em;
 }
 
 html, body {
-	margin: 0;
-	padding: 0;
-	height: 100vh;
-	overflow: hidden;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
 }
 
 body {
   line-height: 1;
   color: black;
   -webkit-user-select: none;
-	-moz-user-select: -moz-none;
-	-ms-user-select: none;
-	user-select: none;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 ul {
@@ -85,10 +86,10 @@ ul {
 /* main */
 
 .root {
-	background: #101010;
-	position: relative;
-	width: 100vw;
-	height: 100vh;
+  background: #101010;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
 
   .streams {
     background: black;
@@ -266,8 +267,16 @@ ul {
     padding-top: 0.3em;
     line-height: 0em;
     font-size: 0.8em;
-    border-left: 1px solid #333;
     text-align: center;
+  }
+
+  .content header section button.cancel {
+    height: 2em;
+
+    i {
+      margin: 0;
+      font-size: 0.7em;
+    }
   }
 
   .content header section button.price {
@@ -275,11 +284,11 @@ ul {
   }
 
   .content header section button.sort-desc {
-    color: #33aa33
+    color: #33aa33;
   }
 
   .content header section button.sort-asc {
-    color: #aa3333
+    color: #da0000;
   }
 
   .content header section i {
@@ -299,7 +308,7 @@ ul {
     background: black;
   }
 
-  .streams ul li {
+  .streams .stream-list .stream {
     display: flex;
     height: 2em;
     line-height: 2em;
@@ -308,11 +317,27 @@ ul {
     padding-right: 0.4em;
   } 
 
-  .streams ul li:first-child {
+  .streams .no-stream {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: #151515;
+    background-image: url('../static/sad.png');
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 40%;
+    opacity: 0.2;
+  }
+
+  .streams .no-stream.loading {
+    background-image: none;
+  }
+
+  .streams .stream-list div div:first-child .stream {
     border-top: none;
   }
 
-  .streams ul li a {
+  .streams .stream-list .stream a {
     text-decoration: none;
     color: #888;
     font-size: 0.8em;
@@ -326,23 +351,23 @@ ul {
     overflow: hidden;
   }
 
-  .streams ul li a:hover,
-  .streams ul li a.active {
+  .streams .stream-list .stream a:hover,
+  .streams .stream-list .stream a.active {
     text-indent: 0.85em;
     border-left: 0.4em solid rgba(255, 255, 255, 0.1);
     cursor: pointer;
   }
 
-  .streams ul li a.active {
+  .streams .stream-list .stream a.active {
       border-left: 0.4em solid rgb(183, 100, 29);
   }
 
-  .show-menu .streams ul li a.active {
+  .show-menu .streams .stream-list .stream a.active {
     border-left: none;
   }
 
-  .streams ul li span,
-  .streams ul li em {
+  .streams .stream-list .stream span,
+  .streams .stream-list .stream em {
     flex: 0 0 auto;
     display: inline-block;
     height: 1.4em;
@@ -358,11 +383,11 @@ ul {
   }
 
 
-  .streams ul li .price-4 {
+  .streams .stream-list .stream .price-4 {
     border: 2px solid hsl(138, 42%, 50%);
   }
 
-  .streams ul li em {
+  .streams .stream-list .stream em {
     flex: 0 0 auto;
     width: 4em;
     color: #6b6b6b;
@@ -370,7 +395,7 @@ ul {
     align-content: flex-start;
   }
 
-  .streams ul li em i {
+  .streams .stream-list .stream em i {
     vertical-align: middle;
     position: relative;
     top: -0.1em;
@@ -379,13 +404,13 @@ ul {
   footer section {
     width: 100%;
     text-align: center;
-    height: 3em;
+    height: 4.4em;
   }
 
   footer button {
-    width: 4em;
-    height: 2.8em;
-    margin: 0.5em auto;
+		width: 4em;
+    height: 3em;
+    margin: 1em auto;
     padding-left: 1.4em;
   }
 

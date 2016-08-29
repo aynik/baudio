@@ -13,13 +13,16 @@ export const sort = createAction('SORT')
 
 export const pushStream = createAction('PUSH_STREAM')
 
-export const fetchStreams = () => {
+export const loadStreams = (n = -1) => {
   return (dispatch) => {
-    const path = '/streams'
+    if (n === -1) n = 0
+    else if (n === 0) return Promise.resolve()
+    const path = `/streams/1000/${n}`
     dispatch(fetch(path))
     return client.get(path)
-      .then(res => res.data.forEach(item => dispatch(pushStream(item))))
-      .catch(err => dispatch(error(err)))
+      .then(({ data: [n, streams] }) =>
+        dispatch(loadStreams(n)) &&
+        dispatch(pushStream(streams)))
   }
 }
 

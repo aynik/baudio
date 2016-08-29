@@ -1,5 +1,5 @@
 import { injectReducer } from '../store/reducers'
-import { fetchStreams } from '../store/actions'
+import { loadStreams } from '../store/actions'
 
 const Streams = (store) => ({
   path: 'streams',
@@ -8,7 +8,7 @@ const Streams = (store) => ({
       const Streams = require('../containers/Streams').default
       const reducer = require('../store/reducers').streams
       injectReducer(store, { key: 'streams', reducer })
-      store.dispatch(fetchStreams())
+      store.dispatch(loadStreams())
       cb(null, Streams)
     }, 'streams')
   }

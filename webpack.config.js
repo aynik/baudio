@@ -111,6 +111,10 @@ webpackConfig.module.loaders = [{
 {
   test: /\.json$/,
   loader: 'json'
+},
+{
+  test: /\.png$/,
+  loader: "url-loader?limit=100000"
 }]
 
 const BASE_CSS_LOADER = 'css?sourceMap&-minimize'

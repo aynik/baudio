@@ -7,7 +7,7 @@ const mapStateToProps = (state) => ({
 
 export const Sorted = connect(
 	mapStateToProps,
-	null
+  null
 )
 
 export default Sorted

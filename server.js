@@ -27,7 +27,7 @@ let devServer = new WebpackDevServer(webpack(config), {
   }
 })
 
-devServer.listen(PORT, 'localhost', function (err) {
+devServer.listen(PORT, '0.0.0.0', function (err) {
   if (err) throw err
   console.log('Serving on: http://localhost:' + PORT)
 })

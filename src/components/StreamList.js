@@ -1,44 +1,82 @@
 import React, { PropTypes } from 'react'
-import sortBy from 'sort-by'
+import classNames from 'classnames'
+
+import { AutoSizer, VirtualScroll } from 'react-virtualized'
+import 'react-virtualized/styles.css'
 
 import classes from '../styles/styles.scss'
 
-const calcColour = (bph) => `hsla(${bph / 10}, ${bph * 4}%, 40%, 1)`
+const calcColour = (bph) => `hsla(${100 - bph}, ${50 + bph / 2}%, 40%, 1)`
 
-const reverseSort = (order) => order ? order > 0 ? -1 : 1 : 0
-const sortField = (order, field) => order ? (order > 0 ? '' : '-') + field : false
+export class StreamList extends React.Component {
+  static propTypes = {
+    streams: PropTypes.array,
+    filter: PropTypes.string,
+    sortBph: PropTypes.number
+  }
 
-export const StreamList = ({ streams, filter, sortListeners = 0, sortBph = 0 }) => (
-  <section className={classes.streams}>
-    <ul>
-    {streams.filter(
-      item => filter ? item.Name.indexOf(filter) > -1 : true
-    ).sort(sortBy(
-      sortField(reverseSort(sortListeners), 'Listeners') ||
-      sortField(sortBph, 'Bph')
-    )).map(({ Name, Listeners, Bph }, n) => (
-       <li key={n}>
-          <a style={{borderLeftColor: calcColour(Bph)}}>
-            {Name}
-          </a>
-          <em>
-            {Listeners}&nbsp;
-            <i className={classes['icon-headphones']} />
-          </em>
-          <span style={{color: calcColour(Bph)}}>
-            {Bph} bph
-          </span>
-        </li>
-    ))}
-    </ul>
-  </section>
-)
+  shouldComponentUpdate (nextProps, nextState) {
+    const render = nextProps.filter !== this.props.filter ||
+      nextProps.sortBph !== this.props.sortBph
+    if (render && this.virtualScroll) this.virtualScroll.forceUpdateGrid()
+    return render
+  }
 
-StreamList.propTypes = {
-  streams: PropTypes.array,
-  filter: PropTypes.string,
-  sortListeners: PropTypes.number,
-  sortBph: PropTypes.number
+  renderItem = ({ index, isScrolling }) => {
+    const { streams } = this.props
+    const { name, listeners, bph } = streams[1][index]
+    return (
+      <div className={classes.stream}>
+        <a style={{borderLeftColor: calcColour(bph)}}>
+          {name}
+        </a>
+        <em>
+          {listeners}&nbsp;
+          <i className={classes['icon-headphones']} />
+        </em>
+        <span style={{color: calcColour(bph)}}>
+          {bph} bph
+        </span>
+      </div>
+    )
+  }
+
+  renderNoItems () {
+    const { streams } = this.props
+    const streamsLength = streams ? streams[1].length : 0
+
+    return (<div className={classNames(classes.streams, {
+      [classes.loading]: !('streams' in this.props),
+      [classes['no-stream']]: !streamsLength
+    })} />)
+  }
+
+  render () {
+    const { streams } = this.props
+    const streamsLength = streams ? streams[1].length : 0
+
+    return (
+      <section className={classes.streams}>
+        { streamsLength
+          ? <AutoSizer>
+             {({ width, height }) => (
+                <VirtualScroll
+                  ref={(ref) => { this.virtualScroll = ref }}
+                  height={height}
+                  width={width}
+                  className={classes['stream-list']}
+                  overscanRowCount={0}
+                  rowRenderer={this.renderItem}
+                  rowCount={streamsLength}
+                  rowHeight={40}
+                />
+              )}
+          </AutoSizer>
+          : this.renderNoItems()
+        }
+      </section>
+    )
+  }
 }
 
 export default StreamList
