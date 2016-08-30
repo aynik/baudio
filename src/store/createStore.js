@@ -1,13 +1,12 @@
-import onStateChange from 'redux-on-state-change'
 import { applyMiddleware, compose, createStore } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
 import thunk from 'redux-thunk'
 import persistState from 'redux-localstorage'
 
-import { applySort, makeRootReducer } from './reducers'
+import { makeRootReducer } from './reducers'
 
 export default (initialState = {}, history) => {
-  const middleware = [thunk, routerMiddleware(history), onStateChange(applySort)]
+  const middleware = [thunk, routerMiddleware(history)]
 
   const enhancers = [compose(
     persistState(['streams', 'sorts', 'filtering', 'toggles'])

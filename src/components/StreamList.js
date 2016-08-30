@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import shallowEqual from 'shallowequal'
 import classNames from 'classnames'
 
 import { AutoSizer, VirtualScroll } from 'react-virtualized'
@@ -16,15 +17,14 @@ export class StreamList extends React.Component {
   }
 
   shouldComponentUpdate (nextProps, nextState) {
-    const render = nextProps.filter !== this.props.filter ||
-      nextProps.sortBph !== this.props.sortBph
+    const render = !shallowEqual(nextProps, this.props)
     if (render && this.virtualScroll) this.virtualScroll.forceUpdateGrid()
     return render
   }
 
   renderItem = ({ index, isScrolling }) => {
     const { streams } = this.props
-    const { name, listeners, bph } = streams[1][index]
+    const { name, listeners, bph } = streams[index]
     return (
       <div className={classes.stream}>
         <a style={{borderLeftColor: calcColour(bph)}}>
@@ -43,7 +43,7 @@ export class StreamList extends React.Component {
 
   renderNoItems () {
     const { streams } = this.props
-    const streamsLength = streams ? streams[1].length : 0
+    const streamsLength = streams ? streams.length : 0
 
     return (<div className={classNames(classes.streams, {
       [classes.loading]: !('streams' in this.props),
@@ -53,7 +53,7 @@ export class StreamList extends React.Component {
 
   render () {
     const { streams } = this.props
-    const streamsLength = streams ? streams[1].length : 0
+    const streamsLength = streams ? streams.length : 0
 
     return (
       <section className={classes.streams}>
@@ -68,7 +68,7 @@ export class StreamList extends React.Component {
                   overscanRowCount={0}
                   rowRenderer={this.renderItem}
                   rowCount={streamsLength}
-                  rowHeight={40}
+                  rowHeight={36}
                 />
               )}
           </AutoSizer>

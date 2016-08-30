@@ -11,7 +11,7 @@ export const filter = createAction('FILTER')
 export const fetch = createAction('FETCH')
 export const sort = createAction('SORT')
 
-export const pushStream = createAction('PUSH_STREAM')
+export const pushStreams = createAction('PUSH_STREAMS')
 
 export const loadStreams = (n = -1) => {
   return (dispatch) => {
@@ -22,7 +22,7 @@ export const loadStreams = (n = -1) => {
     return client.get(path)
       .then(({ data: [n, streams] }) =>
         dispatch(loadStreams(n)) &&
-        dispatch(pushStream(streams)))
+        dispatch(pushStreams(streams)))
   }
 }
 
@@ -31,7 +31,7 @@ export const fetchStream = (id) => {
     const path = `/stream/${id}`
     dispatch(fetch(path))
     return client.get(path)
-      .then(res => dispatch(pushStream(res.data)))
+      .then(res => dispatch(pushStreams([res.data])))
       .catch(err => dispatch(error(err)))
   }
 }

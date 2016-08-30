@@ -344,7 +344,7 @@ ul {
     height: 2.4em;
     width: auto;
     display: inline-block;
-    text-indent: 1.2em;
+    text-indent: 18px;
     flex: 1 1 auto;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -353,8 +353,8 @@ ul {
 
   .streams .stream-list .stream a:hover,
   .streams .stream-list .stream a.active {
-    text-indent: 0.85em;
-    border-left: 0.4em solid rgba(255, 255, 255, 0.1);
+    text-indent: 10px;
+    border-left: 8px solid rgba(255, 255, 255, 0.1);
     cursor: pointer;
   }
 
