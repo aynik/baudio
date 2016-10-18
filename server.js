@@ -1,3 +1,4 @@
+import fs from 'fs'
 import path from 'path'
 import webpack from 'webpack'
 import WebpackDevServer from 'webpack-dev-server'
@@ -12,6 +13,10 @@ let devServer = new WebpackDevServer(webpack(config), {
   hot: true,
   contentBase: path.resolve('./build'),
   historyApiFallback: true,
+  https: {
+    key: fs.readFileSync('./ssl/server.key'),
+    cert: fs.readFileSync('./ssl/server.crt')
+  },
   proxy: {
     '/api/v1/*': {
       host: API_HOST,

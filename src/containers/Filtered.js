@@ -5,8 +5,8 @@ const mapStateToProps = (state) => ({
 })
 
 export const Filtered = connect(
-	mapStateToProps,
-	null
+  mapStateToProps,
+  null
 )
 
 export default Filtered

@@ -1,6 +1,6 @@
 import React from 'react'
 import Toggler from '../containers/Toggler'
-import Filter from '../containers/Filter'
+import Modifiers from './Modifiers'
 import IconButton from './IconButton'
 import Logo from './Logo'
 
@@ -8,10 +8,11 @@ const TogglerIconButton = Toggler(IconButton)
 
 export const Header = (props) => (
   <header>
-    <TogglerIconButton value='menu' />
+    <TogglerIconButton value='funds' />
     <TogglerIconButton value='filter' />
+    <TogglerIconButton value='add' />
     <Logo />
-    <Filter />
+    <Modifiers />
   </header>
 )
 

@@ -7,13 +7,14 @@ import 'react-virtualized/styles.css'
 
 import classes from '../styles/styles.scss'
 
-const calcColour = (bph) => `hsla(${100 - bph}, ${50 + bph / 2}%, 40%, 1)`
+const calcColour = (bph) => `hsl(${100 - bph}, 100%, 40%)`
 
-export class StreamList extends React.Component {
+export class Streams extends React.Component {
   static propTypes = {
     streams: PropTypes.array,
     filter: PropTypes.string,
-    sortBph: PropTypes.number
+    sortBph: PropTypes.number,
+    onClick: PropTypes.func
   }
 
   shouldComponentUpdate (nextProps, nextState) {
@@ -23,19 +24,22 @@ export class StreamList extends React.Component {
   }
 
   renderItem = ({ index, isScrolling }) => {
-    const { streams } = this.props
-    const { name, listeners, bph } = streams[index]
+    const { streams, stream, onClick } = this.props
+    const { id, name, listeners, bph } = streams[index]
     return (
       <div className={classes.stream}>
-        <a style={{borderLeftColor: calcColour(bph)}}>
+        <button className={classNames({
+          [classes.active]: id === stream.id
+        })} style={{borderLeftColor: calcColour(bph)}} onClick={onClick} value={id}>
           {name}
-        </a>
-        <em>
+        </button>
+        <em >
           {listeners}&nbsp;
           <i className={classes['icon-headphones']} />
         </em>
         <span style={{color: calcColour(bph)}}>
-          {bph} bph
+          {bph}&nbsp;
+          <i className={classes['icon-ticket']} />
         </span>
       </div>
     )
@@ -68,7 +72,7 @@ export class StreamList extends React.Component {
                   overscanRowCount={0}
                   rowRenderer={this.renderItem}
                   rowCount={streamsLength}
-                  rowHeight={36}
+                  rowHeight={40}
                 />
               )}
           </AutoSizer>
@@ -79,4 +83,10 @@ export class StreamList extends React.Component {
   }
 }
 
-export default StreamList
+Streams.propTypes = {
+  streams: PropTypes.array,
+  stream: PropTypes.object,
+  onClick: PropTypes.func
+}
+
+export default Streams

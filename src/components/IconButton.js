@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react'
 import classes from '../styles/styles.scss'
 
 export const IconButton = (props) => (
-  <button className={classes[props.value]} {...props} >
+  <button className={classes[`button-${props.value}`]} {...props} >
     <i className={classes[`icon-${props.value}`]} />
   </button>
 )

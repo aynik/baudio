@@ -1,26 +1,31 @@
 import sortBy from 'sort-by'
 import { connect } from 'react-redux'
+import { compose } from 'redux'
+
 import Filtered from './Filtered'
 import Sorted from './Sorted'
-import StreamList from '../components/StreamList'
+import Loader from './Loader'
 
 const sortField = (order, field) => order ? (order > 0 ? '' : '-') + field : false
 
-export const computeStreams = (state) => {
-  if (!state.streams) return []
-
-  return Object.keys(state.streams).map(id => state.streams[id])
-    .filter(item => state.filtering ? item.name.indexOf(state.filtering) > -1 : true)
-    .sort(sortBy(sortField(state.sorts.bph, 'bph') || '-listeners'))
+export const computeStreams = ({ streams, filtering, sorts }) => {
+  return Object.keys(streams).map(id => streams[id])
+    .filter(item => filtering ? item.name.indexOf(filtering) > -1 : true)
+    .sort(sortBy(sortField(sorts.bph, 'bph') || '-listeners'))
 }
 
 const mapStateToProps = (state) => ({
-  streams: computeStreams(state)
+  streams: computeStreams(state),
+  stream: state.player.stream
 })
 
 export const Streams = connect(
   mapStateToProps,
   null
-)(Filtered(Sorted(StreamList)))
+)(compose(
+  Filtered,
+  Sorted,
+  Loader
+)(require('../components/Streams').default))
 
 export default Streams

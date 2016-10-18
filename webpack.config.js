@@ -13,6 +13,10 @@ const webpackConfig = {
   name: 'client',
   target: 'web',
   devtool: 'source-map',
+  externals: ['bindings'],
+  node: {
+    fs: 'empty'
+  },
   resolve: {
     modulesDirectories: [
       'node_modules'
@@ -43,7 +47,7 @@ webpackConfig.entry = {
 webpackConfig.output = {
   filename: `[name].[hash].js`,
   path: path.resolve('./dist'),
-  publicPath: '/' 
+  publicPath: '/'
 }
 
 webpackConfig.plugins = [
@@ -62,8 +66,9 @@ webpackConfig.plugins = [
   new HtmlWebpackPlugin({
     template: path.resolve('./src/index.html'),
     hash: false,
-    favicon: path.resolve('./src/static/favicon.ico'),
+    favicon: path.resolve('./src/statics/favicon.ico'),
     filename: 'index.html',
+    cache: false,
     inject: 'body',
     minify: {
       collapseWhitespace: true
@@ -110,7 +115,7 @@ webpackConfig.module.loaders = [{
 },
 {
   test: /\.json$/,
-  loader: 'json'
+  loader: 'json-loader'
 },
 {
   test: /\.png$/,

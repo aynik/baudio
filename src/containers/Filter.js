@@ -1,7 +1,12 @@
+import { connect } from 'react-redux'
+import { compose } from 'redux'
+
 import Filterer from './Filterer'
 import Sorted from './Sorted'
-import FilterControls from '../components/FilterControls'
 
-export const Filter = Filterer(Sorted(FilterControls))
+export const Filter = connect(state => state)(compose(
+  Filterer,
+  Sorted
+)(require('../components/Filter').default))
 
 export default Filter

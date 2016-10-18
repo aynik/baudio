@@ -13,25 +13,24 @@ const sortClass = (order) => classNames({
   [classes['sort-asc']]: order < 0
 })
 
-export const FilterControls = ({ sortBph, filter, onChange, onClick }) => (
-  <section>
-    <div>
-      <i className={classes['icon-search']} />
-      <input type='text' onChange={onChange} value={filter} />
-      { filter ? <IconButton value='cancel' onClick={onClick} /> : '' }
-      <SorterButton value='bph'
-        className={`${classes.price} ${sortClass(sortBph)}`}>
-          Price
-      </SorterButton>
-    </div>
-  </section>
+export const Filter = ({ sortBph, filter, onChange, onClick }) => (
+  <div>
+    <i className={classes['icon-search']} />
+    <input type='text' placeholder='Stream name'
+      onChange={onChange} value={filter} />
+    { filter ? <IconButton value='cancel' onClick={onClick} /> : '' }
+    <SorterButton value='bph'
+      className={`${classes.price} ${sortClass(sortBph)}`}>
+        Price
+    </SorterButton>
+  </div>
 )
 
-FilterControls.propTypes = {
+Filter.propTypes = {
   sortBph: PropTypes.number,
   filter: PropTypes.string,
   onClick: PropTypes.func,
   onChange: PropTypes.func
 }
 
-export default FilterControls
+export default Filter

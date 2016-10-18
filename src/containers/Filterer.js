@@ -1,20 +1,20 @@
 import { connect } from 'react-redux'
-import { filter } from '../store/actions'
+import { filter } from '../actions'
 
-const mapDispatchToProps = (dispatch, props) => {
+const mapStateToProps = (state) => ({
+  filter: state.filtering
+})
+
+const mapDispatchToProps = (dispatch) => {
   return {
     onChange: (e) => {
-      dispatch(filter(e.target.value))
+      dispatch(filter(e.currentTarget.value))
     },
     onClick: () => {
       dispatch(filter(''))
     }
   }
 }
-
-const mapStateToProps = (state) => ({
-  filter: state.filtering
-})
 
 export const Filterer = connect(
   mapStateToProps,

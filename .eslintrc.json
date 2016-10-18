@@ -13,11 +13,14 @@
     "__COVERAGE__": false,
     "__BASENAME__": false,
     "Promise": false,
+    "Audio": false,
+    "AudioContext": false,
     "document": false,
     "navigator": false,
     "window": false,
     "console": false,
-    "require": false
+    "require": false,
+    "setTimeout": false
   },
   "plugins": [
     "react"
@@ -57,7 +60,7 @@
     "no-duplicate-case": 2,
     "no-empty-character-class": 2,
     "no-empty-pattern": 2,
-    "no-eval": 2,
+    "no-eval": 0,
     "no-ex-assign": 2,
     "no-extend-native": 2,
     "no-extra-bind": 2,

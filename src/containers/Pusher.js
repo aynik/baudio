@@ -1,17 +1,17 @@
 import { connect } from 'react-redux'
-import { sort } from '../actions'
+import { push } from 'react-router-redux'
 
 const mapDispatchToProps = (dispatch, { value }) => {
   return {
     onClick: () => {
-      dispatch(sort(value))
+      dispatch(push(value))
     }
   }
 }
 
-export const Sorter = connect(
+export const Pusher = connect(
   null,
   mapDispatchToProps
 )
 
-export default Sorter
+export default Pusher

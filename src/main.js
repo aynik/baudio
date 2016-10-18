@@ -4,8 +4,8 @@ import createBrowserHistory from 'history/lib/createBrowserHistory'
 import { Router, useRouterHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 import { Provider } from 'react-redux'
-import createStore from './store/createStore'
-import defaultRoute from './routes/index'
+import createStore from './store'
+import createRoutes from './routes'
 
 const browserHistory = useRouterHistory(createBrowserHistory)({
   basename: __BASENAME__
@@ -23,7 +23,7 @@ const history = syncHistoryWithStore(browserHistory, store, {
 const MOUNT_NODE = document.getElementById('root')
 
 let render = () => {
-  const routes = defaultRoute(store)
+  const routes = createRoutes(store)
 
   ReactDOM.render(
     <Provider store={store}>
