@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import classNames from 'classnames'
 import Player from '../containers/Player'
 import Streams from '../containers/Streams'
-import TopUp from '../containers/TopUp'
+import Funding from '../containers/Funding'
 import Header from './Header'
 
 import classes from '../styles/styles.scss'
@@ -22,7 +22,7 @@ export const Application = ({ showFunds, showFilter, showAdd }) => (
         <Streams />
         <Player />
       </section>
-      <TopUp />
+      <Funding />
     </section>
   </div>
 )
@@ -30,7 +30,8 @@ export const Application = ({ showFunds, showFilter, showAdd }) => (
 Application.propTypes = {
   showFunds: PropTypes.bool,
   showFilter: PropTypes.bool,
-  showAdd: PropTypes.bool
+  showAdd: PropTypes.bool,
+  fundingState: PropTypes.string
 }
 
 export default Application

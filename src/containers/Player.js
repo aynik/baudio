@@ -5,7 +5,7 @@ import PlayerToggler from './PlayerToggler'
 import PlayerUpdater from './PlayerUpdater'
 
 const computeSource = ({ id }) => (
-  id ? `http://192.168.1.11:3000/stream/${id}` : ''
+  id ? `https://192.168.1.11:8000/stream/${id}` : ''
 )
 
 const mapStateToProps = (state) => ({

@@ -4,29 +4,31 @@ import webpack from 'webpack'
 import WebpackDevServer from 'webpack-dev-server'
 import config from './webpack.config'
 
-let API_PORT = process.env.API_PORT || 3000
-let API_HOST = process.env.API_HOST || 'localhost'
+const API_PORT = process.env.API_PORT || 3000
+const API_HOST = process.env.API_HOST || 'localhost'
 
-let PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 8080
+const API_V = process.env.BITCOIN_NETWORK === 'testnet'
+  ? 'testing' : 'v1'
 
-let devServer = new WebpackDevServer(webpack(config), {
+var devServer = new WebpackDevServer(webpack(config), {
   hot: true,
-  contentBase: path.resolve('./build'),
+  contentBase: 'build/',
   historyApiFallback: true,
   https: {
     key: fs.readFileSync('./ssl/server.key'),
     cert: fs.readFileSync('./ssl/server.crt')
   },
   proxy: {
-    '/api/v1/*': {
+    ['/api/' + API_V + '/*']: {
       host: API_HOST,
       target: {
-          protocol: 'http:',
-          host: API_HOST,
-          port: API_PORT
+        protocol: 'http:',
+        host: API_HOST,
+        port: API_PORT
       },
-      rewrite: function (req) {
-        req.url = req.url.replace(/^\/api\/v1/, '')
+      pathRewrite: {
+        ['/api/' + API_V]: ''
       }
     }
   }

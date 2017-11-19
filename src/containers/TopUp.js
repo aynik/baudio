@@ -1,17 +1,19 @@
 import { connect } from 'react-redux'
-import { refundAddress } from '../actions'
+import { setRefundAddress, setFundingState } from '../actions'
 
 const mapStateToProps = (state) => ({
   refundAddress: state.funds.refundAddress,
   utxos: state.funds.utxos,
-  feePerKb: state.funds.feePerKb
 })
 
 const mapDispatchToProps = (dispatch) => {
   return {
     dispatch,
-    onChange: e => {
-      dispatch(refundAddress(e.currentTarget.value))
+    onClick: e => {
+      dispatch(setFundingState('account'))
+    },
+    onBlur: e => {
+      dispatch(setRefundAddress(e.currentTarget.value))
     }
   }
 }

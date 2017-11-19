@@ -152,16 +152,24 @@ ul {
     border: 0.3em solid #202020;
 	}
 
+  .container .funds > div + canvas {
+    margin-top: -199px;
+  }
+
 	.container .funds > div {
 		background: #101010;
 		border: 1px solid #222;
-    height: 167px;
+    height: 170px;
     width: 170px;
     text-align: center;
     position: relative;
-    margin-bottom: -237px;
     color: #fff;
 	}
+
+  .container .funds > .funded {
+    height: 170px;
+    color: #1bff00;
+  }
 
 	.container .funds > p {
 		color: #fff;
@@ -187,14 +195,42 @@ ul {
 	}
 
 	.container .funds > div em {
-		margin: 10px 0;
+		margin: 8px 0;
     font-size: 15px;
     word-break: break-word;
     padding: 0 1.2em;
 	}
 
-	.container .funds > div em:first-child {
-		margin-top: 30px;
+	.container .funds > div em {
+    font-size: 16px;
+  }
+
+	.container .funds > div .bph em {
+		color: #00a900;	
+	}
+
+	.container .funds > div .bph {
+    margin-top: 12px;
+	}
+
+	.container .funds > div em:last-child {
+		color: #a90000;	
+	}
+
+  .container .funds > div em strong {
+    color: #fff;
+    font-size: 14px;
+    width: 73%;
+    display: block;
+    line-height: 16px;
+    margin: 0 auto;
+	}
+
+  .container .funds > div em span:first-child {
+    color: #8a8a8a;
+    font-size: 13px;
+    margin: 8px 0;
+    display: block;
 	}
 
 	.container .funds > p textarea {
@@ -223,10 +259,13 @@ ul {
 	}
 
 	.container .funds > section button:first-child {
-		margin-right: 1.4em;
 		color: #fff;
 		border: 1px solid;
 	}
+
+  .container .funds > section button + button {
+    margin-left: 1.4em;
+  }
 
 	.container .funds > section button:last-child {
 		color: red;

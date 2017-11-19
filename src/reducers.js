@@ -3,18 +3,21 @@ import { routerReducer as router } from 'react-router-redux'
 import { handleAction, handleActions } from 'redux-actions'
 
 import {
-  toggle, filter, sort, funding,
+  toggle, filter, sort, 
   pushStreams, pullStream, updateStreams,
   playStream, pauseStream,
   setStream, unsetStream, refreshStream,
   setStreamCancellation,
   setStreamChanges, confirmStreamChanges,
   registerUrl, registerOk, registerError,
-  refundAddress
+  refundAddress, setFundingState, feePerKb,
+  setUtxos, unsetUtxos,
+  setRefundAddress, unsetRefundAddress,
+  setAccount, setController, unsetAccount
 } from './actions'
 
-const assign = (prevState, nextState) => (
-  Object.assign({}, prevState, nextState)
+const assign = (prevstate, nextstate) => (
+  Object.assign({}, prevstate, nextstate)
 )
 
 const computeChanges = (changes, state) => {
@@ -127,17 +130,44 @@ export const player = handleActions({
 })
 
 export const funds = handleActions({
-  [funding]: (state, { payload }) => assign(state, {
-    utxos: payload.utxos,
-    feePerKb: payload.feePerKb
+  [setFundingState]: (state, { payload }) => assign(state, {
+    state: payload
   }),
-  [refundAddress]: (state, { payload }) => assign(state, {
+  [feePerKb]: (state, { payload }) => assign(state, {
+    feePerKb: payload
+  }),
+  [setUtxos]: (state, { payload }) => assign(state, {
+    utxos: payload.map(u => u.toObject())
+  }),
+  [unsetUtxos]: (state) => assign(state, {
+    utxos: null 
+  }),
+  [setRefundAddress]: (state, { payload }) => assign(state, {
     refundAddress: payload
+  }),
+  [unsetRefundAddress]: (state) => assign(state, {
+    refundAddress: null 
   })
 }, {
-  utxos: [],
-  feePerKb: 5000,
+  state: 'topup',
+  utxos: null,
   refundAddress: null
+})
+
+export const objects = handleActions({
+  [setAccount]: (state, { payload }) => assign(state, {
+    account: payload
+  }),
+  [setController]: (state, { payload }) => assign(state, {
+    controller: payload
+  }),
+  [unsetAccount]: (state) => assign(state, {
+    account: null,
+    controller: null
+  })
+}, {
+  account: null,
+  controller: null
 })
 
 export const makeRootReducer = (asyncReducers) => {
@@ -150,6 +180,7 @@ export const makeRootReducer = (asyncReducers) => {
     player,
     router,
     funds,
+    objects,
     ...asyncReducers
   })
 }

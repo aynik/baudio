@@ -5,26 +5,32 @@ import QRCode from 'qrcode.react'
 import { awaitUtxos } from '../actions'
 import classes from '../styles/styles.scss'
 
-const address = smoogs.fundingAddress.toString()
-
 class TopUp extends React.Component {
   componentDidMount () {
-    const { dispatch } = this.props
-    dispatch(awaitUtxos(address))
+    const { utxos, dispatch } = this.props
+    const address = smoogs.fundingAddress.toString()
+
+    if (!utxos) {
+      dispatch(awaitUtxos(address))
+    }
   }
 
   render () {
-    const { utxos, refundAddress, onChange } = this.props
-    let satoshis = utxos.reduce((r, u) => r + u.satoshis, 0)
+    const { utxos, refundAddress, onBlur, onClick } = this.props
+    const address = smoogs.fundingAddress.toString()
+    console.log(`bitcoin:${address}?r=https://81.203.62.211:8000/invoice/${address}`)
+    let satoshis = utxos
+      ? utxos.reduce((r, u) => r + u.amount, 0) * 1e8
+      : 0
     return (<section className={classes.funds}>
-      { utxos.length
+      { utxos
         ? <div><em>Funded</em>
           <i className={classes['icon-ticket']} />{satoshis}
           <em>{address}</em>
         </div>
         : '' }
       <QRCode size={160} value={`bitcoin:${address}?r=https://81.203.62.211:8000/invoice/${address}`} />
-      <p>{ !utxos.length
+      <p>{ !utxos
         ? <span><em>Fund your wallet</em>&nbsp;
           {address}
         </span>
@@ -33,15 +39,15 @@ class TopUp extends React.Component {
         ? <span><em>Change returns to</em>&nbsp;
           {refundAddress}
         </span>
-        : utxos.length
+        : utxos
           ? <textarea
             placeholder='Please provide a return address'
-            onChange={onChange} />
+            onBlur={onBlur} />
           : ''
       }</p>
-      { utxos.length && refundAddress
+      { utxos && refundAddress
         ? <section>
-          <button>Commit</button>
+          <button onClick={onClick}>Commit</button>
           <button>Withdraw</button>
         </section>
         : '' }

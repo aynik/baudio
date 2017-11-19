@@ -4,18 +4,21 @@
   "description": "",
   "main": "./src/index.js",
   "scripts": {
-    "start": "NODE_ENV=development ./node_modules/.bin/babel-node server.js",
+    "start": "./node_modules/.bin/babel-node server.js",
+    "start-testnet": "BITCOIN_NETWORK=testnet ./node_modules/.bin/babel-node server.js",
     "build": "NODE_ENV=production ./node_modules/.bin/babel-node ./node_modules/.bin/webpack",
     "lint": "node_modules/.bin/eslint \"src/**/*.js\"; exit 0"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "smoogs-client": "git+ssh://git@gitlab.com/pablol/smoogs-client.git#804819f4a7c1d913150c6561eeb9ebbdebcea252",
-    "axios": "^0.13.1",
+    "axios": "^0.14.0",
+    "axios-cancel": "github:just-boris/axios-cancel#v2.0.0",
     "classnames": "^2.2.5",
     "history": "^2.0.0",
+    "qrcode.react": "^0.6.1",
     "react": "^15.3.1",
+    "react-addons-shallow-compare": "^15.4.1",
     "react-dom": "^15.3.1",
     "react-redux": "^4.4.5",
     "react-router": "^2.6.1",
@@ -30,9 +33,11 @@
     "redux-thunk": "^2.1.0",
     "require-dir": "^0.3.0",
     "shallowequal": "^0.2.2",
+    "smoogs-client": "git@gitlab.com:smoogs/smoogs-client.git",
     "socket.io": "^1.4.8",
     "sort-by": "^1.1.1",
-    "superagent": "^2.2.0"
+    "superagent": "^2.2.0",
+    "volume-meter": "^2.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",

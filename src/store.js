@@ -11,7 +11,7 @@ export default (initialState = {}, history) => {
   const middleware = [
     thunk,
     routerMiddleware(history),
-    createSocketIoMiddleware(io('https://localhost:8000'))
+    createSocketIoMiddleware(io('https://192.168.1.11:8000'))
   ]
 
   const enhancers = [compose(
@@ -19,7 +19,8 @@ export default (initialState = {}, history) => {
       'streams',
       'sorts',
       'filtering',
-      'toggles'
+      'toggles',
+      'funds'
     ]),
   )]
 
